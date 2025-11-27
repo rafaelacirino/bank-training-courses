@@ -1,1 +1,1 @@
-# bank-training-courses
+# Bank Training Courses API
