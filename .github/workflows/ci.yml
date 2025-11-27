@@ -40,6 +40,7 @@ jobs:
             -Dsonar.organization=rafaelacirino \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.token=$SONAR_TOKEN
+            -Dsonar.branch.name=${GITHUB_REF_NAME}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
