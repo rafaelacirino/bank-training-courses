@@ -3,7 +3,7 @@
 ```text
 This project meets the following criterias:
 
-- 
+- API
 ```
 
 ---
