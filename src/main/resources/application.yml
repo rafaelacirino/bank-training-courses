@@ -3,7 +3,7 @@
 # =============================================
 spring:
   application:
-    name: training-courses # Application name (used in logs, metrics, health checks)
+    name: training-courses
 
   # ---------- In memory H2 Database ----------
   datasource:
@@ -24,7 +24,7 @@ spring:
   # ---------- Database Initialization ----------
   sql:
     init:
-      mode: embedded
+      mode: always
       schema-locations: classpath:schema.sql
       data-locations: classpath:data.sql
       continue-on-error: false
@@ -44,11 +44,12 @@ spring:
 
 # ---------- SpringDoc OpenAPI (Swagger UI) ----------
 springdoc:
-  api-docs:
-    enabled: true
   swagger-ui:
-    enabled: true
-  paths-to-match: /api/training-courses/**
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+  packages-to-scan: com.bank.training
+  paths-to-match: /api/**
 
 # ---------- Logging ----------
 logging:
@@ -58,7 +59,3 @@ logging:
     org.springdoc: INFO
   file:
     name: logs/training-courses.log
-
-server:
-  servlet:
-    context-path: /api/training-courses
