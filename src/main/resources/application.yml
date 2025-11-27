@@ -1,0 +1,60 @@
+# =============================================
+#  Training Courses - Application Configuration
+# =============================================
+spring:
+  application:
+    name: training-courses # Application name (used in logs, metrics, health checks)
+
+  # ---------- In memory H2 Database ----------
+  datasource:
+    url: jdbc:h2:mem:trainingcourses;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: tc
+    password: trainingcourses1234
+
+  # ---------- JPA / Hibernate ----------
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: false
+        show_sql: false
+
+  # ---------- Database Initialization ----------
+  sql:
+    init:
+      mode: embedded
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:data.sql
+      continue-on-error: false
+
+  # ---------- H2 Web Console (dev / test only) ----------
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: false
+
+  # ---------- Cache (Caffeine) ----------
+  cache:
+    type: caffeine
+
+# ---------- SpringDoc OpenAPI (Swagger UI) ----------
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+  paths-to-match: /api/**
+
+# ---------- Logging ----------
+logging:
+  level:
+    org.springframework: INFO
+    com.bank.training: DEBUG
+    org.springdoc: INFO
+  file:
+    name: logs/training-courses.log
