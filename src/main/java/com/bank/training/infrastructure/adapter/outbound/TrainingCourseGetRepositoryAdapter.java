@@ -27,7 +27,7 @@ public class TrainingCourseGetRepositoryAdapter implements TrainingCourseReadRep
      */
     @Override
     public Page<TrainingCourse> findAllActive(Pageable pageable) {
-        return repository.findAll(pageable).map(mapper::toDomain);
+        return repository.findAllActive(pageable).map(mapper::toDomain);
     }
 
     /**
@@ -36,6 +36,6 @@ public class TrainingCourseGetRepositoryAdapter implements TrainingCourseReadRep
      */
     @Override
     public Optional<TrainingCourse> findByIdActive(Long id) {
-        return repository.findById(id).map(mapper::toDomain);
+        return repository.findByIdActive(id).map(mapper::toDomain);
     }
 }
