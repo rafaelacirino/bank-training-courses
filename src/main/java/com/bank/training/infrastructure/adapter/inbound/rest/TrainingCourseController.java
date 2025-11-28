@@ -1,9 +1,11 @@
 package com.bank.training.infrastructure.adapter.inbound.rest;
 
 import com.bank.training.application.dto.request.CreateTrainingCourseRequest;
+import com.bank.training.application.dto.request.UpdateTrainingCourseRequest;
 import com.bank.training.application.dto.response.TrainingCourseResponse;
 import com.bank.training.application.ports.inbound.CreateTrainingCourseUseCase;
 import com.bank.training.application.ports.inbound.GetTrainingCoursesUseCase;
+import com.bank.training.application.ports.inbound.UpdateTrainingCourseUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -32,6 +34,7 @@ public class TrainingCourseController {
 
     private final CreateTrainingCourseUseCase createUseCase;
     private final GetTrainingCoursesUseCase getUseCase;
+    private final UpdateTrainingCourseUseCase updateUseCase;
 
     @PostMapping
     @Operation(summary = "createTrainingCourse", description = "Create a new Course and insert into DB")
@@ -66,6 +69,21 @@ public class TrainingCourseController {
     public ResponseEntity<TrainingCourseResponse> getTrainingCourseByIdWhenActive(
             @PathVariable Long id) {
         return ResponseEntity.ok(getUseCase.findByIdActive(id));
+    }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Update a training course (active course)",
+            description = "Updates course data. If 'active: true' is sent, reactivates an inactive course.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Course updated successfully (may be reactivated)"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "404", description = "Course not found")
+    })
+    public ResponseEntity<TrainingCourseResponse> update(
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateTrainingCourseRequest request) {
+        TrainingCourseResponse update = updateUseCase.update(id, request);
+        return ResponseEntity.ok(update);
     }
 
 }
