@@ -1,9 +1,9 @@
 package com.bank.training.application.ports.inbound;
 
-import com.bank.training.application.dto.create.CreateTrainingCourseRequest;
-import com.bank.training.application.dto.create.CreateTrainingCourseResponse;
+import com.bank.training.application.dto.request.CreateTrainingCourseRequest;
+import com.bank.training.application.dto.response.TrainingCourseResponse;
 
 public interface CreateTrainingCourseUseCase {
 
-    CreateTrainingCourseResponse create(CreateTrainingCourseRequest request);
+    TrainingCourseResponse create(CreateTrainingCourseRequest request);
 }

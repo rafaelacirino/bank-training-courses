@@ -28,6 +28,7 @@ spring:
       schema-locations: classpath:schema.sql
       data-locations: classpath:data.sql
       continue-on-error: false
+      platform: h2
 
   # ---------- H2 Web Console (dev / test only) ----------
   h2:
@@ -38,24 +39,54 @@ spring:
         trace: false
         web-allow-others: false
 
+  # ---------- Spring Data Web - Pagination & Sorting ----------
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        max-page-size: 100
+        one-indexed-parameters: false
+      sort:
+        sort-parameter: sort
+
   # ---------- Cache (Caffeine) ----------
   cache:
     type: caffeine
 
-# ---------- SpringDoc OpenAPI (Swagger UI) ----------
+  # =============================================
+  # SpringDoc OpenAPI 3 + Swagger UI
+  # =============================================
 springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
   api-docs:
     path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: alpha
+    tagsSorter: alpha
+    tryItOutEnabled: true
+    displayRequestDuration: true
   packages-to-scan: com.bank.training
   paths-to-match: /api/**
+  override-pageable-parameter: true
 
-# ---------- Logging ----------
-logging:
-  level:
-    org.springframework: INFO
-    com.bank.training: DEBUG
-    org.springdoc: INFO
-  file:
-    name: logs/training-courses.log
+  # =============================================
+  # Logging Configuration
+  # =============================================
+  logging:
+    level:
+      org.springframework: INFO
+      com.bank.training: DEBUG
+      org.springdoc: INFO
+    file:
+      name: logs/training-courses.log
+
+# =============================================
+# Server Configuration
+# =============================================
+server:
+  servlet:
+    context-path: /
+  port: 8080
+  error:
+    include-stacktrace: on_param
+    include-message: always

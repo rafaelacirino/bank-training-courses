@@ -1,4 +1,4 @@
-package com.bank.training.application.dto.create;
+package com.bank.training.application.dto.response;
 
 import com.bank.training.domain.model.TrainingLevel;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -8,15 +8,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * DTO representing the response returned by the training-course API.
- * Contains the applicable training-course details for a given product, brand, and date.
+ * DTO representing the response when create a course and returned by the training-course API.
+ * Contains the applicable training-course details.
  */
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "Response with training courses details")
-public class CreateTrainingCourseResponse {
+@Schema(description = "Response DTO for training courses")
+public class TrainingCourseResponse {
 
     @Schema(example = "1", description = "Course ID")
     private Long id;
