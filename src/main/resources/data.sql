@@ -34,4 +34,12 @@ VALUES
 
     ('Deactivated Course - Soft Deleted Example',
      'This course has been deactivated and should NOT appear in active listings',
-     0.00, 0, 'BASIC', false);
+     0.00, 0, 'BASIC', false),
+
+    ('Security in Java Applications',
+     'OWASP, JWT, Spring Security 6',
+     2690.00, 35, 'ADVANCED', true),
+
+    ('Performance Tuning in Spring Boot',
+     'JVM, GC, Reactive, Monitoring',
+     3190.00, 40, 'ADVANCED', true);

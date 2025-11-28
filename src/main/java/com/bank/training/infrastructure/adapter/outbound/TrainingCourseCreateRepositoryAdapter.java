@@ -1,6 +1,6 @@
 package com.bank.training.infrastructure.adapter.outbound;
 
-import com.bank.training.application.ports.outbound.TrainingCourseRepositoryPort;
+import com.bank.training.application.ports.outbound.TrainingCourseCreateRepositoryPort;
 import com.bank.training.domain.model.TrainingCourse;
 import com.bank.training.infrastructure.persistence.entity.TrainingCourseEntity;
 import com.bank.training.infrastructure.persistence.mapper.TrainingCourseEntityMapper;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class TrainingCourseRepositoryAdapter implements TrainingCourseRepositoryPort {
+public class TrainingCourseCreateRepositoryAdapter implements TrainingCourseCreateRepositoryPort {
 
     private final TrainingCourseEntityRepository repository;
     private final TrainingCourseEntityMapper mapper;
