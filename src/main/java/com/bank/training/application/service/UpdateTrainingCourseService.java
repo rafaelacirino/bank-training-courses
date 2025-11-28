@@ -26,6 +26,10 @@ public class UpdateTrainingCourseService implements UpdateTrainingCourseUseCase 
 
         mapper.updateEntityFromRequest(entity, request);
 
+        if (request.getActive() != null) {
+            entity.setActive(request.getActive());
+        }
+
         TrainingCourseEntity saved = updateRepositoryPort.update(entity);
         return mapper.toResponse(saved);
     }

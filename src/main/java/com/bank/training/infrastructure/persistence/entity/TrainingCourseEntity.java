@@ -4,7 +4,6 @@ import com.bank.training.domain.model.TrainingLevel;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
@@ -18,7 +17,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @AllArgsConstructor
 @NoArgsConstructor
 @SQLDelete(sql = "UPDATE training_courses SET active = false WHERE id = ?")
-@Where(clause = "active = true")
 @EntityListeners(AuditingEntityListener.class)
 public class TrainingCourseEntity {
 
