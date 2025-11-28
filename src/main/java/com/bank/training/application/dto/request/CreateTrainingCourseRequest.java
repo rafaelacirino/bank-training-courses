@@ -12,6 +12,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
+@Schema(description = "Request DTO for creating a training course")
 public class CreateTrainingCourseRequest {
 
     @NotBlank(message = "Title is mandatory")
