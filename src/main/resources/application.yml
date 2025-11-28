@@ -65,6 +65,7 @@ springdoc:
     tagsSorter: alpha
     tryItOutEnabled: true
     displayRequestDuration: true
+  use-fqn: true
   packages-to-scan: com.bank.training
   paths-to-match: /api/**
   override-pageable-parameter: true

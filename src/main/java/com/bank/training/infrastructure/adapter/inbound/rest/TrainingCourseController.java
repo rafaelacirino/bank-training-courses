@@ -1,5 +1,6 @@
 package com.bank.training.infrastructure.adapter.inbound.rest;
 
+import com.bank.training.application.assembler.TrainingCourseModelAssembler;
 import com.bank.training.application.dto.request.CreateTrainingCourseRequest;
 import com.bank.training.application.dto.request.UpdateTrainingCourseRequest;
 import com.bank.training.application.dto.response.TrainingCourseResponse;
@@ -16,6 +17,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +41,7 @@ public class TrainingCourseController {
     private final GetTrainingCoursesUseCase getUseCase;
     private final UpdateTrainingCourseUseCase updateUseCase;
     private final DeleteTrainingCourseUseCase deleteUseCase;
+    private final TrainingCourseModelAssembler assembler;
 
     @PostMapping
     @Operation(summary = "Create a Bank Training Course", description = "Create a new Course and insert into DB")
@@ -61,15 +66,26 @@ public class TrainingCourseController {
     @Parameter(name = "page", description = "Page number (0-based)", example = "0")
     @Parameter(name = "size", description = "Page size (max 100)", example = "10")
     @Parameter(name = "sort", description = "Sorting criteria (e.g. price,desc or title,asc)", example = "price,desc")
-    public ResponseEntity<Page<TrainingCourseResponse>> getAllTrainingCourses(Pageable pageable) {
-        return ResponseEntity.ok(getUseCase.findAllActive(pageable));
+    public PagedModel<EntityModel<TrainingCourseResponse>> getAllTrainingCourses(Pageable pageable) {
+        Page<TrainingCourseResponse> page = getUseCase.findAllActive(pageable);
+        return PagedModel.of(
+                page.getContent().stream()
+                        .map(assembler::toModel)
+                        .toList(),
+                new PagedModel.PageMetadata(
+                        page.getSize(),
+                        page.getNumber(),
+                        page.getTotalElements(),
+                        page.getTotalPages()),
+                Link.of("http://localhost:8080/api/training-courses").withSelfRel());
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Retrieve a course when its status is active", description = "Retrieve an active course by ID")
-    public ResponseEntity<TrainingCourseResponse> getTrainingCourseByIdWhenActive(
+    public EntityModel<TrainingCourseResponse> getTrainingCourseByIdWhenActive(
             @PathVariable Long id) {
-        return ResponseEntity.ok(getUseCase.findByIdActive(id));
+        TrainingCourseResponse response = getUseCase.findByIdActive(id);
+        return assembler.toModel(response);
     }
 
     @PutMapping("/{id}")
